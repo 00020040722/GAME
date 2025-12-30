@@ -2,9 +2,10 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <title>PIXEL SNAKE - NES</title>
+  <title>PIXEL SNAKE - NEO NES</title>
 
-  <!-- NES 像素字體 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -16,15 +17,25 @@
   <h1>PIXEL SNAKE</h1>
 
   <div class="info">
-    <span>SCORE: <span id="score">0</span></span>
-    <span>HI: <span id="highScore">0</span></span>
+    <span>SCORE <span id="score">0</span></span>
+    <span>HI <span id="highScore">0</span></span>
   </div>
 
   <div class="game-container">
     <canvas id="gameCanvas" width="400" height="400"></canvas>
   </div>
 
-  <p class="tip">PRESS SPACE TO START<br>⬆ ⬇ ⬅ ➡ MOVE</p>
+  <!-- 手機控制 -->
+  <div class="controls">
+    <button data-dir="UP">▲</button>
+    <div class="middle">
+      <button data-dir="LEFT">◀</button>
+      <button data-dir="RIGHT">▶</button>
+    </div>
+    <button data-dir="DOWN">▼</button>
+  </div>
+
+  <p class="tip">SPACE / TAP TO START</p>
 
   <script src="script.js"></script>
 </body>
