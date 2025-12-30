@@ -4,6 +4,12 @@ const ctx = canvas.getContext("2d");
 const box = 20;
 const size = 400;
 
+/* === 速度相關設定 === */
+const BASE_SPEED = 140;   // 初始速度（數字越小越快）
+const SPEED_STEP = 5;     // 每次加速幅度
+const SPEED_SCORE = 3;    // 每幾分加速一次
+const MIN_SPEED = 70;     // 最高速度限制
+
 let snake, food, direction, game, score;
 let running = false;
 let flash = 0;
@@ -14,6 +20,7 @@ const highScoreEl = document.getElementById("highScore");
 let highScore = localStorage.getItem("crtSnakeHigh") || 0;
 highScoreEl.textContent = highScore;
 
+/* 初始化 */
 function init() {
   snake = [{ x: 200, y: 200 }];
   direction = "RIGHT";
@@ -24,6 +31,7 @@ function init() {
   drawStart();
 }
 
+/* 食物 */
 function randomFood() {
   return {
     x: Math.floor(Math.random() * 20) * box,
@@ -31,6 +39,7 @@ function randomFood() {
   };
 }
 
+/* 開始畫面 */
 function drawStart() {
   ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, size, size);
@@ -41,6 +50,7 @@ function drawStart() {
   ctx.fillText("TO START", 200, 220);
 }
 
+/* Game Over */
 function gameOver() {
   clearInterval(game);
   running = false;
@@ -57,6 +67,16 @@ function gameOver() {
   ctx.fillText("GAME OVER", 200, 210);
 }
 
+/* 計算當前速度 */
+function getSpeed() {
+  const level = Math.floor(score / SPEED_SCORE);
+  return Math.max(
+    BASE_SPEED - level * SPEED_STEP,
+    MIN_SPEED
+  );
+}
+
+/* 改方向 */
 function setDir(dir) {
   if (dir === "UP" && direction !== "DOWN") direction = "UP";
   if (dir === "DOWN" && direction !== "UP") direction = "DOWN";
@@ -64,17 +84,20 @@ function setDir(dir) {
   if (dir === "RIGHT" && direction !== "LEFT") direction = "RIGHT";
 }
 
+/* 鍵盤 */
 document.addEventListener("keydown", e => {
   if (e.code === "Space" && !running) {
     init();
     running = true;
-    game = setInterval(draw, 140);
+    game = setInterval(draw, getSpeed());
   }
+
   if (e.key.startsWith("Arrow")) {
     setDir(e.key.replace("Arrow", "").toUpperCase());
   }
 });
 
+/* 觸控方向鍵 */
 document.querySelectorAll(".controls button").forEach(btn => {
   btn.addEventListener("touchstart", e => {
     e.preventDefault();
@@ -82,14 +105,16 @@ document.querySelectorAll(".controls button").forEach(btn => {
   });
 });
 
+/* 點擊畫面開始 */
 canvas.addEventListener("touchstart", () => {
   if (!running) {
     init();
     running = true;
-    game = setInterval(draw, 140);
+    game = setInterval(draw, getSpeed());
   }
 });
 
+/* 主循環 */
 function draw() {
   ctx.clearRect(0, 0, size, size);
 
@@ -100,13 +125,13 @@ function draw() {
     flash--;
   }
 
-  // 蛇（固定色）
+  /* 蛇 */
   snake.forEach((s, i) => {
     ctx.fillStyle = i === 0 ? "#ffffff" : "#cfcfcf";
     ctx.fillRect(s.x, s.y, box, box);
   });
 
-  // 食物（微發光）
+  /* 食物 */
   ctx.shadowColor = "#d62828";
   ctx.shadowBlur = 10;
   ctx.fillStyle = "#d62828";
@@ -120,13 +145,13 @@ function draw() {
   if (direction === "LEFT") head.x -= box;
   if (direction === "RIGHT") head.x += box;
 
-  /* ===== 穿牆邏輯 ===== */
+  /* 穿牆 */
   if (head.x < 0) head.x = size - box;
   if (head.x >= size) head.x = 0;
   if (head.y < 0) head.y = size - box;
   if (head.y >= size) head.y = 0;
 
-  /* 只撞自己才輸 */
+  /* 撞自己 */
   if (snake.some(s => s.x === head.x && s.y === head.y)) {
     gameOver();
     return;
@@ -139,9 +164,16 @@ function draw() {
     scoreEl.textContent = score;
     flash = 6;
     food = randomFood();
+
+    /* === 關鍵：動態更新速度 === */
+    clearInterval(game);
+    game = setInterval(draw, getSpeed());
+
   } else {
     snake.pop();
   }
 }
 
+/* 啟動 */
 init();
+
