@@ -1,4 +1,6 @@
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   background: #000;
@@ -13,7 +15,7 @@ body {
 h1 {
   font-size: 18px;
   margin-bottom: 12px;
-  text-shadow: 0 0 8px #0ff;
+  text-shadow: 0 0 6px #0ff;
 }
 
 .info {
@@ -24,27 +26,69 @@ h1 {
   margin-bottom: 10px;
 }
 
+/* === CRT 外框 === */
+.game-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* 遊戲畫面 */
 canvas {
   background: #050505;
   border: 6px solid #fff;
   image-rendering: pixelated;
   box-shadow:
-    0 0 12px #0ff,
-    0 0 24px rgba(0,255,255,.3);
+    0 0 14px rgba(0,255,255,.4),
+    0 0 30px rgba(0,255,255,.15);
 }
 
-/* 幻彩掃描感 */
-canvas::after {
+/* === 真 CRT 掃描線 === */
+.game-container::after {
   content: "";
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 400px;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.15) 0px,
+      rgba(0,0,0,0.15) 1px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,0) 4px
+    );
+  mix-blend-mode: multiply;
 }
 
+/* === CRT 螢幕微彎 + RGB 偏移 === */
+.game-container::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255,255,255,0.06) 0%,
+    rgba(0,0,0,0.4) 70%
+  );
+}
+
+/* 提示文字 */
 .tip {
   font-size: 9px;
   margin-top: 10px;
   color: #aaa;
 }
 
-/* 手機控制鍵 */
+/* === 手機控制 === */
 .controls {
   margin-top: 14px;
   display: flex;
@@ -61,7 +105,7 @@ canvas::after {
   color: #0ff;
   border: 2px solid #0ff;
   font-family: inherit;
-  box-shadow: 0 0 8px #0ff;
+  box-shadow: 0 0 6px #0ff;
 }
 
 .controls .middle {
@@ -74,7 +118,9 @@ canvas::after {
   color: #000;
 }
 
-/* 手機優化 */
+/* 桌機隱藏方向鍵 */
 @media (min-width: 768px) {
-  .controls { display: none; }
+  .controls {
+    display: none;
+  }
 }
