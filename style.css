@@ -1,44 +1,80 @@
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
-  background-color: #000000;
-  color: #ffffff;
+  background: #000;
+  color: #fff;
   font-family: "Press Start 2P", monospace;
   text-align: center;
   margin: 0;
-  padding-top: 28px;
+  padding-top: 20px;
+  overflow: hidden;
 }
 
 h1 {
-  font-size: 20px;
-  margin-bottom: 16px;
-  letter-spacing: 2px;
+  font-size: 18px;
+  margin-bottom: 12px;
+  text-shadow: 0 0 8px #0ff;
 }
 
 .info {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 32px;
   font-size: 10px;
-  margin-bottom: 12px;
-}
-
-.game-container {
-  display: flex;
-  justify-content: center;
+  margin-bottom: 10px;
 }
 
 canvas {
-  background-color: #0a0a0a;
-  border: 6px solid #ffffff;
+  background: #050505;
+  border: 6px solid #fff;
   image-rendering: pixelated;
+  box-shadow:
+    0 0 12px #0ff,
+    0 0 24px rgba(0,255,255,.3);
+}
+
+/* 幻彩掃描感 */
+canvas::after {
+  content: "";
 }
 
 .tip {
-  margin-top: 16px;
-  font-size: 10px;
-  line-height: 1.6;
-  color: #cccccc;
+  font-size: 9px;
+  margin-top: 10px;
+  color: #aaa;
+}
+
+/* 手機控制鍵 */
+.controls {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.controls button {
+  width: 64px;
+  height: 44px;
+  font-size: 18px;
+  background: #000;
+  color: #0ff;
+  border: 2px solid #0ff;
+  font-family: inherit;
+  box-shadow: 0 0 8px #0ff;
+}
+
+.controls .middle {
+  display: flex;
+  gap: 12px;
+}
+
+.controls button:active {
+  background: #0ff;
+  color: #000;
+}
+
+/* 手機優化 */
+@media (min-width: 768px) {
+  .controls { display: none; }
 }
