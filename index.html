@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>PIXEL SNAKE - NES</title>
+
+  <!-- NES 像素字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <h1>PIXEL SNAKE</h1>
+
+  <div class="info">
+    <span>SCORE: <span id="score">0</span></span>
+    <span>HI: <span id="highScore">0</span></span>
+  </div>
+
+  <div class="game-container">
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+  </div>
+
+  <p class="tip">PRESS SPACE TO START<br>⬆ ⬇ ⬅ ➡ MOVE</p>
+
+  <script src="script.js"></script>
+</body>
+</html>

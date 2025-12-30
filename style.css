@@ -1,0 +1,44 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: "Press Start 2P", monospace;
+  text-align: center;
+  margin: 0;
+  padding-top: 28px;
+}
+
+h1 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  font-size: 10px;
+  margin-bottom: 12px;
+}
+
+.game-container {
+  display: flex;
+  justify-content: center;
+}
+
+canvas {
+  background-color: #0a0a0a;
+  border: 6px solid #ffffff;
+  image-rendering: pixelated;
+}
+
+.tip {
+  margin-top: 16px;
+  font-size: 10px;
+  line-height: 1.6;
+  color: #cccccc;
+}
